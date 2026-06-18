@@ -23,6 +23,8 @@ employees = [
     }
 ]
 
+
+
 @app.get("/")
 def home():
     return {
@@ -48,4 +50,24 @@ def get_employees():
     return employees  
 
  
+@app.get("/employees/{employee_id}")
+def get_employee(employee_id: int):
+    for employee in employees:
+        if employee["id"] == employee_id:
+            return employee
+        
+    raise HTTPException(
+        status_code=404,
+        detail="Employee not found"
 
+    ) 
+
+@app.get("/departments")
+def get_departments():
+    departments=[]
+    for employee in employees:
+        if employee['department']  not in departments:
+            departments.append(employee['department'])
+
+    return departments   
+       
