@@ -80,6 +80,12 @@ def get_departments():
 
 @app.post("/employees")
 def add_employee(employee:Employee):
+    for data in employees:
+        if data["id"]==employee.id:
+            raise HTTPException(
+                status_code=400,
+                detail="Employee ID already exists"
+            )
     employees.append(employee.model_dump())
     return {
         "messsage":"Employee created successfully",
