@@ -1,6 +1,13 @@
 from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 
 app = FastAPI()
+
+class Employee(BaseModel) :
+    id:int
+    name:str
+    department:str
+    salary:int
 
 employees = [
     {
