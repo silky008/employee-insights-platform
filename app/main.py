@@ -76,5 +76,14 @@ def get_departments():
         if employee['department']  not in departments:
             departments.append(employee['department'])
 
-    return departments   
+    return departments  
+
+@app.post("/employees")
+def add_employee(employee:Employee):
+    employees.append(employee.model_dump())
+    return {
+        "messsage":"Employee created successfully",
+        "employee": employee
+    }
+
        
