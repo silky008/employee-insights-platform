@@ -1,4 +1,5 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
+from app.routers import employees
 
 app = FastAPI()
 @app.get("/")
@@ -21,44 +22,6 @@ def health():
         "application": "Employee Insights Platform"
     } 
 
-@app.get("/employees")
-def get_employees():
-    return employees  
-
- 
-@app.get("/employees/{employee_id}")
-def get_employee(employee_id: int):
-    for employee in employees:
-        if employee["id"] == employee_id:
-            return employee
-        
-    raise HTTPException(
-        status_code=404,
-        detail="Employee not found"
-
-    ) 
-
-@app.get("/departments")
-def get_departments():
-    departments=[]
-    for employee in employees:
-        if employee['department']  not in departments:
-            departments.append(employee['department'])
-
-    return departments  
-
-@app.post("/employees")
-def add_employee(employee:Employee):
-    for data in employees:
-        if data["id"]==employee.id:
-            raise HTTPException(
-                status_code=400,
-                detail="Employee ID already exists"
-            )
-    employees.append(employee.model_dump())
-    return {
-        "messsage":"Employee created successfully",
-        "employee": employee
-    }
+app.include_router(employees.router)
 
        
