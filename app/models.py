@@ -6,14 +6,14 @@
    ## salary:int
 
 from sqlalchemy import Integer, String, Column
-from database import engine
+from app.database import engine
 from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
 
 class Employee(Base):
     __tablename__="employees"
-    id= Column(Integer,primary_key=True,index=True)
+    id= Column(Integer,primary_key=True)
     name=Column(String)
     department=Column(String)
     salary=Column(Integer)
